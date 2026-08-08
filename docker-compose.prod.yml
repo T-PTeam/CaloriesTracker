@@ -1,0 +1,47 @@
+name: calories-tracker
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-calories}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-calories}
+      POSTGRES_DB: ${POSTGRES_DB:-calories}
+    volumes:
+      - calories_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-calories} -d ${POSTGRES_DB:-calories}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER:-calories}:${POSTGRES_PASSWORD:-calories}@postgres:5432/${POSTGRES_DB:-calories}?sslmode=disable
+      HTTP_ADDR: ":8080"
+      MIGRATIONS_PATH: /app/migrations
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+      args:
+        VITE_API_BASE_URL: ""
+    ports:
+      - "${WEB_PORT:-8088}:80"
+    depends_on:
+      - api
+    restart: unless-stopped
+
+volumes:
+  calories_postgres_data:

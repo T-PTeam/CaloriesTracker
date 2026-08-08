@@ -1,0 +1,24 @@
+# Binaries
+/bin/
+/cmd/bot/bot
+*.exe
+*.test
+
+# Env
+.env
+.env.local
+.env.prod
+.env.droplet
+web/.env
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+
+# Node
+web/node_modules/
+web/dist/
+
+# Coverage
+coverage.out

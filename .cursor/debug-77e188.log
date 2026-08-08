@@ -1,0 +1,3 @@
+{"data":{"code_len":6,"telegram_id":937866525},"hypothesisId":"H7","location":"telegram/handler.go:/start","message":"issued registration code on /start","runId":"start-code","sessionId":"77e188","timestamp":1786030757002}
+{"sessionId": "77e188", "runId": "set-webhook", "hypothesisId": "H1", "location": "scripts/set-webhook.sh", "message": "token loaded for setWebhook", "data": {"present": true, "length": 46, "looks_placeholder": false, "has_webhook_url": false}, "timestamp": 1786033039891}
+{"sessionId": "77e188", "runId": "set-webhook", "hypothesisId": "H4", "location": "scripts/set-webhook.sh:result", "message": "setWebhook response", "data": {"ok": true, "error_code": null, "description": "Webhook was set"}, "timestamp": 1786033040338}
